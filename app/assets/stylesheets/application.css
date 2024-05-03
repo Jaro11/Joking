@@ -1,0 +1,56 @@
+/* Setting a gradient background for the entire body of the page */
+body {
+  background: linear-gradient(to right, #6a11cb, #2575fc); /* Example gradient from purple to blue */
+  color: white; /* Sets text color to white for better contrast */
+  height: 100vh; /* Full viewport height */
+  margin: 0; /* Resets default margin */
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Centers content vertically and horizontally */
+}
+
+
+
+/* Styles for the entire content area */
+.content {
+  text-align: center; /* Centers text and buttons */
+  padding-top: 50px; /* Adds space at the top */
+  font-family: Arial, sans-serif; /* Sets the font for all text inside */
+}
+
+/* Styles for headers */
+h1 {
+  color: #4A90E2; /* A nice blue color */
+}
+
+/* General button styling */
+.button {
+  display: inline-block; /* Necessary for buttons to align properly */
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  color: white; /* Text color */
+  text-decoration: none; /* Removes underline from links */
+  font-size: 16px;
+  cursor: pointer; /* Shows a pointer cursor on hover */
+  transition: background-color 0.3s; /* Smooth transition for background color */
+}
+
+/* Specific styles for the joke button */
+.joke-button {
+  background-color: #34A853; /* A nice green color */
+}
+
+.joke-button:hover {
+  background-color: #2C8C43; /* A darker green on hover */
+}
+
+/* Specific styles for the tired button */
+.tired-button {
+  background-color: #F4B400; /* A vivid yellow color */
+}
+
+.tired-button:hover {
+  background-color: #DAA106; /* A darker yellow on hover */
+}
