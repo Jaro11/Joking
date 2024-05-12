@@ -1,29 +1,33 @@
 require 'net/http'
+require 'uri'
 
 class JokesController < ApplicationController
   def show
     @joke = fetch_joke
     respond_to do |format|
-      format.html # continues to respond to HTML requests as before
-      format.json { render json: { joke: @joke } } # respond to JSON requests
+      format.html # Render HTML for initial page load or if JavaScript is disabled
+      format.json { render json: { joke: @joke || "No joke found, please try again!" } }
     end
   end
 
   private
 
   def fetch_joke
-    uri = URI.parse("https://v2.jokeapi.dev/joke/Any")
+    uri = URI("https://v2.jokeapi.dev/joke/Any")
     response = Net::HTTP.get_response(uri)
     if response.is_a?(Net::HTTPSuccess)
-      JSON.parse(response.body)["joke"]
+      body = JSON.parse(response.body)
+      body["joke"] || "#{body["setup"]} #{body["delivery"]}"
     else
-      puts "Failed to fetch joke: #{response.code} #{response.message}"
+      Rails.logger.info "Failed to fetch joke: #{response.code} #{response.message}"
       nil
     end
   rescue JSON::ParserError => e
-    puts "JSON Parsing Error: #{e.message}"
+    Rails.logger.error "JSON Parsing Error: #{e.message}"
+    nil
   rescue => e
-    puts "General Error: #{e.message}"
+    Rails.logger.error "General Error: #{e.message}"
+    nil
   end
-
 end
+

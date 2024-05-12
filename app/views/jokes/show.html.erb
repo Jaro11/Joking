@@ -1,31 +1,32 @@
 <div class="content">
   <h1>If you miss Jaro, click the first button</h1>
-
-  <p id="jokeDisplay"><%= @joke %></p>
-
-  <%= button_to "Tell me a joke", {action: "show"}, method: :get, form_class: "button joke-button", remote: true %>
-  <%= button_to "I am tired of this", {action: "show"}, method: :get, form_class: "button tired-button", remote: true %>
+  <!-- Remove the server-side rendering of @joke and initialize empty -->
+  <p id="jokeDisplay"></p>
+  <button class="button joke-button">Tell me a joke</button>
+  <button class="button tired-button">I am tired of this</button>
 </div>
 
-<script type="text/javascript">
-document.addEventListener("DOMContentLoaded", function() {
-  const jokeButton = document.querySelector('.joke-button button');
-  jokeButton.addEventListener('click', function(event) {
-    event.preventDefault(); // Prevent form submission and page reload
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    fetch('/jokes/show?_=' + new Date().getTime(), {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Cache-Control': 'no-cache',
-        'X-CSRF-Token': csrfToken  // Include the CSRF token in the request headers
-      }
-    })
-    .then(response => response.json())
-    .then(data => {
-      document.querySelector('#jokeDisplay').textContent = data.joke;
-    })
-    .catch(error => console.error('Error fetching joke:', error));
+<script defer type="text/javascript">
+  document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('button.button');
+    buttons.forEach(button => {
+      button.addEventListener('click', function(event) {
+        event.preventDefault();
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        fetch(`/jokes/show?_=${new Date().getTime()}`, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Cache-Control': 'no-cache',
+            'X-CSRF-Token': csrfToken
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          document.querySelector('#jokeDisplay').textContent = data.joke || 'No joke found!';
+        })
+        .catch(error => console.error('Error fetching joke:', error));
+      });
+    });
   });
-});
 </script>
