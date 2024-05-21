@@ -1,3 +1,35 @@
+/* Existing styles, updated for better layout stability */
+
+/* Setting a gradient background for the entire body of the page */
+body {
+  background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient from purple to blue */
+  color: white; /* Sets text color to white for better contrast */
+  margin: 0; /* Resets default margin */
+  padding: 0; /* Ensures there are no unexpected paddings */
+  height: 100vh; /* Full viewport height */
+  display: flex;
+  flex-direction: column; /* Changes layout to column to manage header, content, and possibly footer */
+  justify-content: center;
+  align-items: center; /* Centers content horizontally */
+}
+
+/* Container to wrap everything and provide padding without affecting flex properties */
+.container {
+  width: 100%; /* Full width to align with the body */
+  max-width: 600px; /* Maximum width for better control in large screens */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Aligns items to the start to prevent movement when content changes */
+  height: 100%; /* Takes full height of the parent */
+  padding: 20px; /* Padding to keep content from the edges */
+}
+
+header, footer {
+  text-align: center;
+  padding: 10px;
+  background-color: #f0f0f0; /* Light grey background */
+}
+
 /* Existing styles, with updates for responsive design */
 
 /* Setting a gradient background for the entire body of the page */
@@ -57,4 +89,3 @@ h1 {
 .tired-button:hover {
   background-color: #DAA106; /* A darker yellow on hover */
 }
-

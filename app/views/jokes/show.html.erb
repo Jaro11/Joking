@@ -1,32 +1,102 @@
 <div class="content">
-  <h1>If you miss Jaro, click the first button</h1>
-  <!-- Remove the server-side rendering of @joke and initialize empty -->
+  <h1>If you miss Jaro, ask for a joke</h1>
+
+  <div class="filters-container" >
+    <div class="categories">
+      <h2>Categories</h2>
+      <form id="jokeForm">
+        <label>
+          <input type="checkbox" name="category" value="Any" checked> Any
+        </label><br>
+        <label>
+          <input type="checkbox" name="category" value="Misc"> Miscellaneous
+        </label><br>
+        <label>
+          <input type="checkbox" name="category" value="Programming"> Programming
+        </label><br>
+        <label>
+          <input type="checkbox" name="category" value="Dark"> Dark
+        </label><br>
+        <label>
+          <input type="checkbox" name="category" value="Pun"> Pun
+        </label><br>
+        <label>
+          <input type="checkbox" name="category" value="Spooky"> Spooky
+        </label><br>
+        <label>
+          <input type="checkbox" name="category" value="Christmas"> Christmas
+        </label>
+      </form>
+    </div>
+
+    <div class="blacklist-flags">
+      <h2>Blacklist jokes</h2>
+      <form id="jokeForm">
+        <label>
+          <input type="checkbox" name="blacklistFlag" value="nsfw"> NSFW
+        </label><br>
+        <label>
+          <input type="checkbox" name="blacklistFlag" value="religious"> Religious
+        </label><br>
+        <label>
+          <input type="checkbox" name="blacklistFlag" value="political"> Political
+        </label><br>
+        <label>
+          <input type="checkbox" name="blacklistFlag" value="racist"> Racist
+        </label><br>
+        <label>
+          <input type="checkbox" name="blacklistFlag" value="sexist"> Sexist
+        </label><br>
+        <label>
+          <input type="checkbox" name="blacklistFlag" value="explicit"> Explicit
+        </label>
+      </form>
+    </div>
+  </div>
+
+  <button id="getJokeButton" class="button">Tell me a joke</button>
   <p id="jokeDisplay"></p>
-  <button class="button joke-button">Tell me a joke</button>
-  <button class="button tired-button">I am tired of this</button>
 </div>
+
+<style>
+  .filters-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  .categories, .blacklist-flags {
+    width: 45%;
+  }
+</style>
 
 <script defer type="text/javascript">
   document.addEventListener('DOMContentLoaded', () => {
-    const buttons = document.querySelectorAll('button.button');
-    buttons.forEach(button => {
-      button.addEventListener('click', function(event) {
-        event.preventDefault();
-        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        fetch(`/jokes/show?_=${new Date().getTime()}`, {
-          method: 'GET',
-          headers: {
-            'Accept': 'application/json',
-            'Cache-Control': 'no-cache',
-            'X-CSRF-Token': csrfToken
-          }
-        })
-        .then(response => response.json())
-        .then(data => {
-          document.querySelector('#jokeDisplay').textContent = data.joke || 'No joke found!';
-        })
-        .catch(error => console.error('Error fetching joke:', error));
-      });
+    document.getElementById('getJokeButton').addEventListener('click', function(event) {
+      event.preventDefault();
+
+      // Get selected categories
+      const selectedCategories = Array.from(document.querySelectorAll('input[name="category"]:checked'))
+                                      .map(checkbox => checkbox.value);
+      const category = selectedCategories.length > 0 ? selectedCategories.join(',') : 'Any';
+
+      // Get selected blacklist flags
+      const selectedFlags = Array.from(document.querySelectorAll('input[name="blacklistFlag"]:checked'))
+                                  .map(checkbox => checkbox.value);
+      const blacklistFlags = selectedFlags.length > 0 ? selectedFlags.join(',') : '';
+
+      const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+      fetch(`/jokes/show?category=${category}&blacklistFlags=${blacklistFlags}&_=${new Date().getTime()}`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Cache-Control': 'no-cache',
+          'X-CSRF-Token': csrfToken
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.querySelector('#jokeDisplay').textContent = data.joke || 'No joke found!';
+      })
+      .catch(error => console.error('Error fetching joke:', error));
     });
   });
 </script>

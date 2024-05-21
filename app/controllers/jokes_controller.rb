@@ -3,7 +3,9 @@ require 'uri'
 
 class JokesController < ApplicationController
   def show
-    @joke = fetch_joke
+    category = params[:category] || "Any"
+    blacklist_flags = params[:blacklistFlags] || ""
+    @joke = fetch_joke(category, blacklist_flags)
     respond_to do |format|
       format.html # Render HTML for initial page load or if JavaScript is disabled
       format.json { render json: { joke: @joke || "No joke found, please try again!" } }
@@ -12,8 +14,8 @@ class JokesController < ApplicationController
 
   private
 
-  def fetch_joke
-    uri = URI("https://v2.jokeapi.dev/joke/Any")
+  def fetch_joke(category, blacklist_flags)
+    uri = URI("https://v2.jokeapi.dev/joke/#{category}?blacklistFlags=#{blacklist_flags}")
     response = Net::HTTP.get_response(uri)
     if response.is_a?(Net::HTTPSuccess)
       body = JSON.parse(response.body)
@@ -30,4 +32,3 @@ class JokesController < ApplicationController
     nil
   end
 end
-
