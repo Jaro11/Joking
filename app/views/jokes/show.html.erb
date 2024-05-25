@@ -1,7 +1,7 @@
 <div class="content">
-  <h1>If you miss Jaro, ask for a joke</h1>
+  <h1>Choose your preferences and get a joke</h1>
 
-  <div class="filters-container" >
+  <div class="filters-container">
     <div class="categories">
       <h2>Categories</h2>
       <form id="jokeForm">
@@ -30,7 +30,7 @@
     </div>
 
     <div class="blacklist-flags">
-      <h2>Blacklist jokes</h2>
+      <h2>Blacklist Flags</h2>
       <form id="jokeForm">
         <label>
           <input type="checkbox" name="blacklistFlag" value="nsfw"> NSFW
@@ -54,19 +54,9 @@
     </div>
   </div>
 
-  <button id="getJokeButton" class="button">Tell me a joke</button>
+  <button id="getJokeButton" class="button">Get Joke</button>
   <p id="jokeDisplay"></p>
 </div>
-
-<style>
-  .filters-container {
-    display: flex;
-    justify-content: space-between;
-  }
-  .categories, .blacklist-flags {
-    width: 45%;
-  }
-</style>
 
 <script defer type="text/javascript">
   document.addEventListener('DOMContentLoaded', () => {

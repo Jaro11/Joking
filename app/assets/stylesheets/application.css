@@ -30,24 +30,10 @@ header, footer {
   background-color: #f0f0f0; /* Light grey background */
 }
 
-/* Existing styles, with updates for responsive design */
-
-/* Setting a gradient background for the entire body of the page */
-body {
-  background: linear-gradient(to right, #6a11cb, #2575fc); /* Example gradient from purple to blue */
-  color: white; /* Sets text color to white for better contrast */
-  height: 100vh; /* Full viewport height */
-  margin: 0; /* Resets default margin */
-  display: flex;
-  justify-content: center;
-  align-items: center; /* Centers content vertically and horizontally */
-  padding: 20px; /* Adds padding to keep content away from edges */
-}
-
 /* Styles for the entire content area */
 .content {
   text-align: center; /* Centers text and buttons */
-  padding-top: 20px; /* Adds space at the top, reduced for smaller screens */
+  padding-top: 16px; /* Adds space at the top, reduced for smaller screens */
   font-family: Arial, sans-serif; /* Sets the font for all text inside */
   width: 100%; /* Ensures the content container uses full available width */
   max-width: 600px; /* Maximum width of content area */
@@ -66,10 +52,15 @@ h1 {
   border: none;
   border-radius: 5px;
   color: white; /* Text color */
+  background-color: #3c29a9; /* A darker green on hover */
   text-decoration: none; /* Removes underline from links */
   font-size: 16px;
   cursor: pointer; /* Shows a pointer cursor on hover */
   transition: background-color 0.3s; /* Smooth transition for background color */
+}
+
+.button:hover {
+  background-color: #2C8C43; /* A darker green on hover */
 }
 
 /* Specific styles for the joke button */
@@ -88,4 +79,27 @@ h1 {
 
 .tired-button:hover {
   background-color: #DAA106; /* A darker yellow on hover */
+}
+
+/* Filters container styling */
+.filters-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 20px; /* Adds space between filters and button */
+}
+
+/* Categories and blacklist flags styling */
+.categories, .blacklist-flags {
+  width: 35%;
+  text-align: left; /* Align text to the left for better readability */
+  background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background for contrast */
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.categories h2, .blacklist-flags h2 {
+  color: #ffffff;
+  font-size: 18px;
+  margin-bottom: 10px; /* Adds space between the header and the first checkbox */
 }
