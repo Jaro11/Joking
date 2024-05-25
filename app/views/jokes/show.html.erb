@@ -25,6 +25,9 @@
         </label><br>
         <label>
           <input type="checkbox" name="category" value="Christmas"> Christmas
+        </label><br>
+        <label>
+          <input type="checkbox" id="slovakJoke" value="Slovak"> Slovak
         </label>
       </form>
     </div>
@@ -62,6 +65,12 @@
   document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('getJokeButton').addEventListener('click', function(event) {
       event.preventDefault();
+
+      // Check if Slovak joke checkbox is selected
+      if (document.getElementById('slovakJoke').checked) {
+        document.querySelector('#jokeDisplay').textContent = "Bozka, mila Bozka,\nkto Ta dneska bozka?\nBozku nik nebozka,\nBozka je nebozka.";
+        return;
+      }
 
       // Get selected categories
       const selectedCategories = Array.from(document.querySelectorAll('input[name="category"]:checked'))

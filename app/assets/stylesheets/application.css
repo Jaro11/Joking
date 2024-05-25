@@ -33,7 +33,7 @@ header, footer {
 /* Styles for the entire content area */
 .content {
   text-align: center; /* Centers text and buttons */
-  padding-top: 16px; /* Adds space at the top, reduced for smaller screens */
+  padding-top: 20px; /* Adds space at the top, reduced for smaller screens */
   font-family: Arial, sans-serif; /* Sets the font for all text inside */
   width: 100%; /* Ensures the content container uses full available width */
   max-width: 600px; /* Maximum width of content area */
@@ -52,7 +52,6 @@ h1 {
   border: none;
   border-radius: 5px;
   color: white; /* Text color */
-  background-color: #3c29a9; /* A darker green on hover */
   text-decoration: none; /* Removes underline from links */
   font-size: 16px;
   cursor: pointer; /* Shows a pointer cursor on hover */
@@ -91,7 +90,7 @@ h1 {
 
 /* Categories and blacklist flags styling */
 .categories, .blacklist-flags {
-  width: 35%;
+  width: 45%;
   text-align: left; /* Align text to the left for better readability */
   background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background for contrast */
   padding: 10px;
