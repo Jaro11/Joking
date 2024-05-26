@@ -1,101 +1,124 @@
-<div class="content">
-  <h1>Choose your preferences and get a joke</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content="<%= csrf_meta_tags %>">
+  <title>Joke Generator</title>
+  <link rel="stylesheet" href="/stylesheets/jokes.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <header>
+    <h1>Joke Generator</h1>
+  </header>
 
-  <div class="filters-container">
-    <div class="categories">
-      <h2>Categories</h2>
-      <form id="jokeForm">
-        <label>
-          <input type="checkbox" name="category" value="Any" checked> Any
-        </label><br>
-        <label>
-          <input type="checkbox" name="category" value="Misc"> Miscellaneous
-        </label><br>
-        <label>
-          <input type="checkbox" name="category" value="Programming"> Programming
-        </label><br>
-        <label>
-          <input type="checkbox" name="category" value="Dark"> Dark
-        </label><br>
-        <label>
-          <input type="checkbox" name="category" value="Pun"> Pun
-        </label><br>
-        <label>
-          <input type="checkbox" name="category" value="Spooky"> Spooky
-        </label><br>
-        <label>
-          <input type="checkbox" name="category" value="Christmas"> Christmas
-        </label><br>
-        <label>
-          <input type="checkbox" id="slovakJoke" value="Slovak"> Slovak
-        </label>
-      </form>
-    </div>
+  <div class="container">
+    <div class="content">
+      <h1>Choose your preferences and get a joke</h1>
 
-    <div class="blacklist-flags">
-      <h2>Blacklist Flags</h2>
-      <form id="jokeForm">
-        <label>
-          <input type="checkbox" name="blacklistFlag" value="nsfw"> NSFW
-        </label><br>
-        <label>
-          <input type="checkbox" name="blacklistFlag" value="religious"> Religious
-        </label><br>
-        <label>
-          <input type="checkbox" name="blacklistFlag" value="political"> Political
-        </label><br>
-        <label>
-          <input type="checkbox" name="blacklistFlag" value="racist"> Racist
-        </label><br>
-        <label>
-          <input type="checkbox" name="blacklistFlag" value="sexist"> Sexist
-        </label><br>
-        <label>
-          <input type="checkbox" name="blacklistFlag" value="explicit"> Explicit
-        </label>
-      </form>
+      <div class="filters-container">
+        <div class="categories">
+          <h2>Categories</h2>
+          <form id="jokeForm">
+            <label>
+              <input type="checkbox" name="category" value="Any" checked> Any
+            </label><br>
+            <label>
+              <input type="checkbox" name="category" value="Misc"> Miscellaneous
+            </label><br>
+            <label>
+              <input type="checkbox" name="category" value="Programming"> Programming
+            </label><br>
+            <label>
+              <input type="checkbox" name="category" value="Dark"> Dark
+            </label><br>
+            <label>
+              <input type="checkbox" name="category" value="Pun"> Pun
+            </label><br>
+            <label>
+              <input type="checkbox" name="category" value="Spooky"> Spooky
+            </label><br>
+            <label>
+              <input type="checkbox" name="category" value="Christmas"> Christmas
+            </label><br>
+            <label>
+              <input type="checkbox" id="slovakJoke" value="Slovak"> Slovak
+            </label>
+          </form>
+        </div>
+
+        <div class="blacklist-flags">
+          <h2>Blacklist Flags</h2>
+          <form id="jokeForm">
+            <label>
+              <input type="checkbox" name="blacklistFlag" value="nsfw"> NSFW
+            </label><br>
+            <label>
+              <input type="checkbox" name="blacklistFlag" value="religious"> Religious
+            </label><br>
+            <label>
+              <input type="checkbox" name="blacklistFlag" value="political"> Political
+            </label><br>
+            <label>
+              <input type="checkbox" name="blacklistFlag" value="racist"> Racist
+            </label><br>
+            <label>
+              <input type="checkbox" name="blacklistFlag" value="sexist"> Sexist
+            </label><br>
+            <label>
+              <input type="checkbox" name="blacklistFlag" value="explicit"> Explicit
+            </label>
+          </form>
+        </div>
+      </div>
+
+      <button id="getJokeButton" class="button joke-button">Get Joke</button>
+      <p id="jokeDisplay"></p>
     </div>
   </div>
 
-  <button id="getJokeButton" class="button">Get Joke</button>
-  <p id="jokeDisplay"></p>
-</div>
+  <footer>
+    <p>&copy; 2024 Joke Generator. All rights reserved.</p>
+  </footer>
 
-<script defer type="text/javascript">
-  document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('getJokeButton').addEventListener('click', function(event) {
-      event.preventDefault();
+  <script defer type="text/javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('getJokeButton').addEventListener('click', function(event) {
+        event.preventDefault();
 
-      // Check if Slovak joke checkbox is selected
-      if (document.getElementById('slovakJoke').checked) {
-        document.querySelector('#jokeDisplay').textContent = "Bozka, mila Bozka,\nkto Ta dneska bozka?\nBozku nik nebozka,\nBozka je nebozka.";
-        return;
-      }
-
-      // Get selected categories
-      const selectedCategories = Array.from(document.querySelectorAll('input[name="category"]:checked'))
-                                      .map(checkbox => checkbox.value);
-      const category = selectedCategories.length > 0 ? selectedCategories.join(',') : 'Any';
-
-      // Get selected blacklist flags
-      const selectedFlags = Array.from(document.querySelectorAll('input[name="blacklistFlag"]:checked'))
-                                  .map(checkbox => checkbox.value);
-      const blacklistFlags = selectedFlags.length > 0 ? selectedFlags.join(',') : '';
-
-      const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-      fetch(`/jokes/show?category=${category}&blacklistFlags=${blacklistFlags}&_=${new Date().getTime()}`, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Cache-Control': 'no-cache',
-          'X-CSRF-Token': csrfToken
+        // Check if Slovak joke checkbox is selected
+        if (document.getElementById('slovakJoke').checked) {
+          document.querySelector('#jokeDisplay').textContent = "Bozka, mila Bozka,\nkto Ta dneska bozka?\nBozku nik nebozka,\nBozka je nebozka.";
+          return;
         }
-      })
-      .then(response => response.json())
-      .then(data => {
-        document.querySelector('#jokeDisplay').textContent = data.joke || 'No joke found!';
-      })
-      .catch(error => console.error('Error fetching joke:', error));
+
+        // Get selected categories
+        const selectedCategories = Array.from(document.querySelectorAll('input[name="category"]:checked'))
+                                        .map(checkbox => checkbox.value);
+        const category = selectedCategories.length > 0 ? selectedCategories.join(',') : 'Any';
+
+        // Get selected blacklist flags
+        const selectedFlags = Array.from(document.querySelectorAll('input[name="blacklistFlag"]:checked'))
+                                    .map(checkbox => checkbox.value);
+        const blacklistFlags = selectedFlags.length > 0 ? selectedFlags.join(',') : '';
+
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        fetch(`/jokes/show?category=${category}&blacklistFlags=${blacklistFlags}&_=${new Date().getTime()}`, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Cache-Control': 'no-cache',
+            'X-CSRF-Token': csrfToken
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          document.querySelector('#jokeDisplay').textContent = data.joke || 'No joke found!';
+        })
+        .catch(error => console.error('Error fetching joke:', error));
+      });
     });
-  });
-</script>
+  </script>
+</body>
+</html>

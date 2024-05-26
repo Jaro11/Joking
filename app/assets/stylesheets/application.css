@@ -1,104 +1,98 @@
-/* Existing styles, updated for better layout stability */
-
-/* Setting a gradient background for the entire body of the page */
+/* Global Styles */
 body {
-  background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient from purple to blue */
-  color: white; /* Sets text color to white for better contrast */
-  margin: 0; /* Resets default margin */
-  padding: 0; /* Ensures there are no unexpected paddings */
-  height: 100vh; /* Full viewport height */
-  display: flex;
-  flex-direction: column; /* Changes layout to column to manage header, content, and possibly footer */
-  justify-content: center;
-  align-items: center; /* Centers content horizontally */
-}
-
-/* Container to wrap everything and provide padding without affecting flex properties */
-.container {
-  width: 100%; /* Full width to align with the body */
-  max-width: 600px; /* Maximum width for better control in large screens */
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  color: white;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* Aligns items to the start to prevent movement when content changes */
-  height: 100%; /* Takes full height of the parent */
-  padding: 20px; /* Padding to keep content from the edges */
+  justify-content: space-between;
+  font-family: Arial, sans-serif;
 }
 
-header, footer {
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+}
+
+header {
   text-align: center;
-  padding: 10px;
-  background-color: #f0f0f0; /* Light grey background */
+  padding: 20px;
 }
 
-/* Styles for the entire content area */
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+}
+
 .content {
-  text-align: center; /* Centers text and buttons */
-  padding-top: 20px; /* Adds space at the top, reduced for smaller screens */
-  font-family: Arial, sans-serif; /* Sets the font for all text inside */
-  width: 100%; /* Ensures the content container uses full available width */
-  max-width: 600px; /* Maximum width of content area */
+  text-align: center;
+  padding-top: 20px;
+  width: 100%;
 }
 
-/* Styles for headers */
-h1 {
-  color: #4A90E2; /* A nice blue color */
-}
-
-/* General button styling */
-.button {
-  display: inline-block; /* Necessary for buttons to align properly */
-  padding: 10px 20px;
-  margin: 10px;
-  border: none;
-  border-radius: 5px;
-  color: white; /* Text color */
-  text-decoration: none; /* Removes underline from links */
-  font-size: 16px;
-  cursor: pointer; /* Shows a pointer cursor on hover */
-  transition: background-color 0.3s; /* Smooth transition for background color */
-}
-
-.button:hover {
-  background-color: #2C8C43; /* A darker green on hover */
-}
-
-/* Specific styles for the joke button */
-.joke-button {
-  background-color: #34A853; /* A nice green color */
-}
-
-.joke-button:hover {
-  background-color: #2C8C43; /* A darker green on hover */
-}
-
-/* Specific styles for the tired button */
-.tired-button {
-  background-color: #F4B400; /* A vivid yellow color */
-}
-
-.tired-button:hover {
-  background-color: #DAA106; /* A darker yellow on hover */
-}
-
-/* Filters container styling */
 .filters-container {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 20px; /* Adds space between filters and button */
+  margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
-/* Categories and blacklist flags styling */
 .categories, .blacklist-flags {
   width: 45%;
-  text-align: left; /* Align text to the left for better readability */
-  background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background for contrast */
-  padding: 10px;
+  text-align: left;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 20px;
   border-radius: 5px;
+  margin-bottom: 20px;
 }
 
 .categories h2, .blacklist-flags h2 {
   color: #ffffff;
   font-size: 18px;
-  margin-bottom: 10px; /* Adds space between the header and the first checkbox */
+  margin-bottom: 10px;
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #2C8C43;
+}
+
+.joke-button {
+  background-color: #34A853;
+}
+
+.tired-button {
+  background-color: #F4B400;
+}
+
+@media (max-width: 768px) {
+  .filters-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .categories, .blacklist-flags {
+    width: 80%;
+  }
 }
